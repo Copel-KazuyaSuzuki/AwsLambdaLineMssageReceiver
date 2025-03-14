@@ -91,7 +91,7 @@ public class LambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent
             sqsEntity.setFileId(requestEntity.isFile() ? requestEntity.getFileId() : null);
             sqsEntity.setFileName(requestEntity.isFile() ? requestEntity.getFileName() : null);
 
-            context.getLogger().log("SQS「" + SQS_QUEUE_URL_SES_AI_REGISTER + "に次のメッセージを登録します.：" + sqsEntity.toString());
+            context.getLogger().log("SQS「" + SQS_QUEUE_URL_SES_AI_REGISTER + "」に次のメッセージを登録します.：" + sqsEntity.toString());
             SendMessageResult result = sqsEntity.sendMessage();
 
             // (2-5) メッセージ送信成功ログを出力する

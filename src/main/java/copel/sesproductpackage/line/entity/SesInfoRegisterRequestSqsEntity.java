@@ -61,6 +61,11 @@ public class SesInfoRegisterRequestSqsEntity extends SQSEntityBase {
                 + "}";
     }
 
+    @Override
+    public String toString() {
+        return this.getMessageBody();
+    }
+
     // GETTER・SETTER
     public String getRequestType() {
         return requestType;
