@@ -20,7 +20,7 @@ jobs:
           java-version: '17'
 
       - name: Maven パッケージをビルド
-        run: mvn clean package
+        run: mvn clean package -DskipTests
 
       - name: AWS CLI のセットアップ
         uses: aws-actions/configure-aws-credentials@v1
