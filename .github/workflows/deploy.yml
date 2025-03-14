@@ -38,4 +38,4 @@ jobs:
         run: |
           aws lambda update-function-code \
             --function-name AwsLambdaLineMssageReceiver \
-            --zip-file fileb://target/line-handler-1.0.0.jar
+            --zip-file fileb://target/AwsLambdaLineMssageReceiver-0.0.1-SNAPSHOT.jar
