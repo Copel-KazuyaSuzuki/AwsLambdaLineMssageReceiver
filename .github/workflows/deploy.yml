@@ -40,6 +40,10 @@ jobs:
             --function-name AwsLambdaLineMssageReceiver \
             --zip-file fileb://target/AwsLambdaLineMssageReceiver-0.0.1-SNAPSHOT.jar
 
+      - name: Lambda の更新が完了するまで待機
+        run: |
+          aws lambda wait function-updated --function-name AwsLambdaLineMssageReceiver
+
       - name: Lambda ハンドラーを設定
         run: |
           aws lambda update-function-configuration \

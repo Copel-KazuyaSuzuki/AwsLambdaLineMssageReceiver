@@ -38,15 +38,21 @@ public class LambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent
     // メソッド
     // =====================================
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
-        // (0) 開始ログを出力
-        context.getLogger().log(input.getHttpMethod() + " " + input.getPath());
+        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
 
-        // (1) リクエストボディを出力
-        context.getLogger().log("リクエストBody: " + input.getBody());
+        // (1) 空のリクエストの場合、処理終了
+    	if (input.getBody() == null) {
+    		context.getLogger().log("リクエストボディが空のリクエストのため、処理を行わず終了します。");
+            response.setStatusCode(400);
+            response.setBody("{\"message\": \"リクエストボディが空です。\"}");
+            response.setHeaders(Map.of("Content-Type", "application/json"));
+            return response;
+    	}
 
         // (2) 処理を実施
-        // (2-1) レスポンスオブジェクトを作成
-        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
+        // (2-1) リクエストボディを出力
+        context.getLogger().log(input.getHttpMethod() + " " + input.getPath());
+        context.getLogger().log("リクエストBody: " + input.getBody());
 
         // (2-2) リクエストボディをLineMessagingApiWebhookEntityに変換する
         LineMessagingApiWebhookEntity requestEntity = new LineMessagingApiWebhookEntity(input.getBody());
