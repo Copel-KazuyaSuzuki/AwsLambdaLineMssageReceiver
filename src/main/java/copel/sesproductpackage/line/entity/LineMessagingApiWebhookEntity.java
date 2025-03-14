@@ -58,16 +58,23 @@ public class LineMessagingApiWebhookEntity {
 
     /**
      * JSON文字列を受け取ってパースし、メンバ変数に格納.
+     *
+     * @param jsonString JSON文字列
+     * @throws IOException
      */
-    public LineMessagingApiWebhookEntity(final String jsonString) {
+    public LineMessagingApiWebhookEntity(final String jsonString) throws IllegalArgumentException {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(jsonString);
 
-            // イベントのタイプ (message, follow, join など)
+            // eventsが空であれば処理しない
             if (!rootNode.has("events")) {
-                throw new IOException("Invalid JSON format");
+                throw new IOException();
+            } else if (rootNode.path("events").size() < 1) {
+                throw new IOException();
             }
+
+            // イベントのタイプ (message, follow, join など)
             this.type = rootNode.path("events").get(0).path("type").asText();
 
             // 送信日時
@@ -91,7 +98,6 @@ public class LineMessagingApiWebhookEntity {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
             throw new IllegalArgumentException("Invalid JSON format");
         }
     }

@@ -55,7 +55,16 @@ public class LambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent
         context.getLogger().log("リクエストBody: " + input.getBody());
 
         // (2-2) リクエストボディをLineMessagingApiWebhookEntityに変換する
-        LineMessagingApiWebhookEntity requestEntity = new LineMessagingApiWebhookEntity(input.getBody());
+        LineMessagingApiWebhookEntity requestEntity;
+        try {
+	        requestEntity = new LineMessagingApiWebhookEntity(input.getBody());
+        } catch (IllegalArgumentException e) {
+        	// 解析に失敗した場合、処理を終了する
+            response.setStatusCode(400);
+            response.setBody("{\"message\": \"LINE Messaging APIからWebhookで送信されたリクエスト内容が不正です。\"}");
+            response.setHeaders(Map.of("Content-Type", "application/json"));
+            return response;
+        }
 
         // (2-3) 異常なリクエストの場合、処理を終了する
         if (!requestEntity.isValid()) {
