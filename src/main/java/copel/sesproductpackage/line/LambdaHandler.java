@@ -90,6 +90,8 @@ public class LambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent
             sqsEntity.setRawContent(requestEntity.isFile() ? null : requestEntity.getText());
             sqsEntity.setFileId(requestEntity.isFile() ? requestEntity.getFileId() : null);
             sqsEntity.setFileName(requestEntity.isFile() ? requestEntity.getFileName() : null);
+
+            context.getLogger().log("SQS「" + SQS_QUEUE_URL_SES_AI_REGISTER + "に次のメッセージを登録します.：" + sqsEntity.toString());
             SendMessageResult result = sqsEntity.sendMessage();
 
             // (2-5) メッセージ送信成功ログを出力する
@@ -105,6 +107,7 @@ public class LambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent
         }
 
          // (3) レスポンスを作成し返却する
+        context.getLogger().log("正常に処理を終了します。");
         response.setStatusCode(200);
         response.setBody("{\"message\": \"正常に終了しました。\"}");
         response.setHeaders(Map.of("Content-Type", "application/json"));
