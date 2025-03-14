@@ -39,3 +39,9 @@ jobs:
           aws lambda update-function-code \
             --function-name AwsLambdaLineMssageReceiver \
             --zip-file fileb://target/AwsLambdaLineMssageReceiver-0.0.1-SNAPSHOT.jar
+
+      - name: Lambda ハンドラーを設定
+        run: |
+          aws lambda update-function-configuration \
+            --function-name AwsLambdaLineMssageReceiver \
+            --handler copel.sesproductpackage.line.LambdaHandler::handleRequest
