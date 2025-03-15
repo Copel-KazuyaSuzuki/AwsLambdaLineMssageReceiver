@@ -50,15 +50,22 @@ public class SesInfoRegisterRequestSqsEntity extends SQSEntityBase {
 
     @Override
     protected String getMessageBody() {
-        return "{"
+        String body = "{"
                 + "\"request_type\": \"" + this.requestType + "\""
                 + "\"from_group\": \"" + this.fromGroup + "\""
                 + "\"from_id\": \"" + this.fromId + "\""
-                + "\"from_name\": \"" + this.fromName + "\""
-                + "\"raw_content\": \"" + this.rawContent + "\""
-                + "\"file_id\": \"" + this.fileId + "\""
-                + "\"file_name\": \"" + this.fileName + "\""
-                + "}";
+                + "\"from_name\": \"" + this.fromName + "\"";
+        if (this.rawContent != null) {
+        	body += "\"raw_content\": \"" + this.rawContent + "\"";
+        }
+        if (this.fileId != null) {
+        	body += "\"file_id\": \"" + this.fileId + "\"";
+        }
+        if (this.fileName != null) {
+        	body += "\"file_name\": \"" + this.fileName + "\"";
+        }
+    	body += "}";
+    	return body;
     }
 
     @Override
