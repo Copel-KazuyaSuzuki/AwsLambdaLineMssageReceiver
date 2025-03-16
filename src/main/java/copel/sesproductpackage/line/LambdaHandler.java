@@ -84,7 +84,7 @@ public class LambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent
             SesInfoRegisterRequestSqsEntity sqsEntity
                 = new SesInfoRegisterRequestSqsEntity(Regions.AP_NORTHEAST_1, SQS_QUEUE_URL_SES_AI_REGISTER);
             sqsEntity.setRequestType(requestEntity.isFile() ? RequestType.LineFile.getCode() : RequestType.LineMessage.getCode());
-            sqsEntity.setFromGroup(requestEntity.isGroup() ? requestEntity.getGroupId() : null);
+            sqsEntity.setFromGroup(requestEntity.isGroup() ? requestEntity.getGroupId() : "personal_line");
             sqsEntity.setFromId(requestEntity.getUserId());
             sqsEntity.setFromName(requestEntity.getUserName(LINE_CHANNEL_ACCESS_TOKEN));
             sqsEntity.setRawContent(requestEntity.isFile() ? null : requestEntity.getText());

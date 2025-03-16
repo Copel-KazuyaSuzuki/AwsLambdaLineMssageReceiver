@@ -33,7 +33,7 @@ class SQSEntityBaseTest {
         sqsEntity = new SesInfoRegisterRequestSqsEntity(Regions.AP_NORTHEAST_1, QUEUE_URL) {
             @Override
             protected String getMessageBody() {
-                return "{\"message\": \"test\"}";
+                return "{\"message\": \"\ntest\t\"}";
             }
         };
 
@@ -63,6 +63,6 @@ class SQSEntityBaseTest {
 
     @Test
     void testGetMessageBody() {
-        assertEquals("{\"message\": \"test\"}", sqsEntity.getMessageBody());
+        assertEquals("{\"message\": \"\ntest\t\"}", sqsEntity.getMessageBody());
     }
 }
