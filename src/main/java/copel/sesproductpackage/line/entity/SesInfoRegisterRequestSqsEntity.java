@@ -56,13 +56,14 @@ public class SesInfoRegisterRequestSqsEntity extends SQSEntityBase {
                 + "\"from_id\": \"" + this.fromId + "\","
                 + "\"from_name\": \"" + this.fromName + "\",";
         if (this.rawContent != null) {
-        	body += "\"raw_content\": \"" + this.rawContent + "\"";
+        	// 制御文字を削除した上でボディにセット
+        	body += "\"raw_content\": \"" + this.rawContent.replaceAll("\\p{Cntrl}", "") + "\"";
         }
         if (this.fileId != null) {
         	body += "\"file_id\": \"" + this.fileId + "\",";
         }
         if (this.fileName != null) {
-        	body += "\"file_name\": \"" + this.fileName + "\"";
+        	body += "\"file_name\": \"" + this.fileName.replaceAll("\\p{Cntrl}", "") + "\"";
         }
     	body += "}";
     	return body;

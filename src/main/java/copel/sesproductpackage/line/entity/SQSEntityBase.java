@@ -6,7 +6,6 @@ import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * SQSメッセージのリクエストエンティティの基底クラス.
@@ -45,7 +44,7 @@ public abstract class SQSEntityBase {
     public SendMessageResult sendMessage() throws Exception {
         SendMessageRequest sendMessageRequest = new SendMessageRequest()
                 .withQueueUrl(this.queueUrl)
-                .withMessageBody(new ObjectMapper().writeValueAsString(this.getMessageBody()));
+                .withMessageBody(this.getMessageBody());
         return this.sqsClient.sendMessage(sendMessageRequest);
     }
 
